@@ -154,7 +154,7 @@ def _process_figure(value, fmt):
         if kvs['secno'] != cursec:
             cursec = kvs['secno']
             Nreferences = 1
-        kvs['tag'] = cursec + '.' + str(Nreferences)
+        kvs['tag'] = cursec + '-' + str(Nreferences)
         Nreferences += 1
 
     # Save to the global references tracker
@@ -181,16 +181,16 @@ def _process_figure(value, fmt):
                                 Str('%d:'%references[attrs[0]]),
                                 RawInline('html', r'</span>')] \
                 if fmt in ['html', 'html5'] else \
-                [Str(captionname), Space(), Str('%d:'%references[attrs[0]])]
+                [Str(captionname), Space(), Str('%d'%references[attrs[0]]), Space()]
             value[0]['c'][1] += [Space()] + list(caption)
         else:  # Tagged reference
             assert isinstance(references[attrs[0]], STRTYPES)
             text = references[attrs[0]]
             if text.startswith('$') and text.endswith('$'):  # Math
                 math = text.replace(' ', r'\ ')[1:-1]
-                els = [Math({"t":"InlineMath", "c":[]}, math), Str(':')]
+                els = [Math({"t":"InlineMath", "c":[]}, math), Space()]
             else:  # Text
-                els = [Str(text+':')]
+                els = [Str(text), Space()]
             value[0]['c'][1] = \
                 [RawInline('html', r'<span>'), Str(captionname), Space()] + \
                 els + [RawInline('html', r'</span>')] \
