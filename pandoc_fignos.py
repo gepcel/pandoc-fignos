@@ -74,7 +74,7 @@ unreferenceable = []   # List of labels that are unreferenceable
 captionname = 'Figure'            # Used with \figurename
 plusname = ['fig.', 'figs.']      # Used with \cref
 starname = ['Figure', 'Figures']  # Used with \Cref
-caption_sep = ':'
+caption_sep = ' '
 
 use_cleveref_default = False      # Default setting for clever referencing
 capitalize = False                # Default setting for capitalizing plusname
@@ -155,7 +155,7 @@ def _process_figure(value, fmt):
         if kvs['secno'] != cursec:
             cursec = kvs['secno']
             Nreferences = 1
-        kvs['tag'] = cursec + '.' + str(Nreferences)
+        kvs['tag'] = cursec + '-' + str(Nreferences)
         Nreferences += 1
 
     # Save to the global references tracker
